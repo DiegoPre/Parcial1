@@ -1,0 +1,86 @@
+use IMPORSECURITY
+
+
+***Para crear llaves foraneas***
+
+ALTER TABLE Usuarios
+ADD FOREIGN KEY (Id_Rol) REFERENCES Roles(Id_Rol);
+
+ALTER TABLE Orden_Compra
+ADD FOREIGN KEY (Id_Usuario) REFERENCES Usuarios(Id_Usuario);
+
+ALTER TABLE Orden_Compra
+ADD FOREIGN KEY (Id_Producto) REFERENCES Productos(Id_Producto);
+
+ALTER TABLE Productos
+ADD FOREIGN KEY (Id_Categoria) REFERENCES Categoria_Producto(Id);
+
+ALTER TABLE Productos
+ADD FOREIGN KEY (Id_Proveedor) REFERENCES Proveedores(Id_Proveedor);
+
+ALTER TABLE Factura
+ADD FOREIGN KEY (Id_Orden) REFERENCES Orden_Compra(Id_Orden);
+
+ALTER TABLE Factura
+ADD FOREIGN KEY (Id_Metodo_Pago) REFERENCES Metodo_Pago(Id_Metodo_Pago);
+
+****VSCommunity
+Para conectar la DB Imporsecurity con el servidor*****
+Scaffold-DbContext "Server=DESKTOP-ALMS\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connection=True; TrustServerCertificate=True;" Microsoft.EntityFrameWorkCore.SqlServer -OutPut Models
+
+Adicionar servicios en  Programs.cs para cargar la DB
+builder.Services.AddDbContext<ImporsecurityContext>(options => options.UseSqlServer("Server=DESKTOP-ALMS\\SQLEXPRESS; Database=IMPORSECURITY; Trusted_Connetion=true; MultipleActiveResultSets=true"));
+
+
+****VSCode Angular 
+<app-root> </app-root> es un selector para pruebas unitarias que validan fallos dentro de app.component.ts
+CMD del proyecto
+npm i
+ng new name (crear proyecto)
+ng serve	(abrir servidor localhost:4200)
+ng build  compila una app
+crea carpeta Components en app (click derecho New Folder)
+cd .\src\app\Components> para estar en el directorio componentes
+luego genera los componentes por terminal con:
+
+ng g c (nombreComponente) (css, html y ts) para cada componente
+ng add @angular/material
+ng add @angular/cdk
+ng generate @angular/material:navigation menu
+
+En menu.component.html  
+linea 8 <a mat-list-item href="/Mascota">Mascota</a>
+linea 25 pegar <router-outlet></router-outlet>
+
+En app-routing.modules.ts
+Linea 8 {path:"Mascota",component:MascotasComponent},
+
+En app.component.html
+<app-menu></app-menu>
+<H2>{{title}}</H2>
+En app.component.ts
+Linea 9 title = 'Parcial1 DIEGO PRE';  Stream Interpolation
+
+
+ng generate @angular/material:table tableClientes   nuestrosClientes
+ng generate @angular/material:address-form registrar  formulario de contactenos 
+
+Crear carpeta Service desde app
+>ng g s api desde la carpeta Services
+
+en Rest.services.ts se debe import {HttpClient} from '@angular\
+
+
+
+***Program.cs****
+app.UseCors();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200"
+                                ).AllowAnyHeader()
+                                .AllowAnyMethod();
+        });
+});
